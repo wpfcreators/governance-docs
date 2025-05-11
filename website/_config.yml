@@ -143,7 +143,7 @@ liquid:
 back_to_top: true
 back_to_top_text: "トップに戻る"
 
-footer_content: 'Copyright &copy; 2025 WeatherPlanet Fan Creators。<a href="https://choosealicense.com/licenses/mit" target="_blank">MIT ライセンス</a>に基づいて配布されています。<a href="https://github.com" target="_blank">このサイトは GitHub Pages によってホスティングされています。</a>'
+footer_content: 'Copyright &copy; 2025 WeatherPlanet Fan Creators。<a href="https://choosealicense.com/licenses/mit" target="_blank">MIT ライセンス</a>に基づいて配布されています。<a href="https://pages.github.com" target="_blank">このサイトは GitHub Pages によってホスティングされています。</a>'
 
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
