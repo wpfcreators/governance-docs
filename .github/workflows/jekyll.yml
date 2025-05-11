@@ -26,12 +26,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install
+      
       - name: Build
         uses: actions/jekyll-build-pages@v1
         with:
-          destination: "./_site"  # ← 出力先も明示（変更しないなら省略可）
-          verbose: true
-      
+          source: "./"    # ルートからビルド
+          destination: "./_site"
+          verbose: true   # エラーを詳細に表示
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
