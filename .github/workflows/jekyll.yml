@@ -29,7 +29,6 @@ jobs:
       - name: Build
         uses: actions/jekyll-build-pages@v1
         with:
-          source: "./website"   # ← Jekyllのソースディレクトリを指定
           destination: "./_site"  # ← 出力先も明示（変更しないなら省略可）
       
       - name: Upload artifact
