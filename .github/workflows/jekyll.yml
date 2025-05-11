@@ -46,7 +46,7 @@ jobs:
       - name: Build Jekyll for GitHub Pages
         uses: actions/jekyll-build-pages@v1.0.13
         with:
-          source: website
+          source: "./website"
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
