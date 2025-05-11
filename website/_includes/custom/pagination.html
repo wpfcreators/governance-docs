@@ -1,0 +1,79 @@
+{%- assign pages_with_title = site.pages | where_exp: "item", "item.title and item.title != '' and item.pagination_exclude != true" %}
+
+{%- assign top_pages = pages_with_title | where_exp: "item", "item.parent == nil or item.parent == ''" | sort: "nav_order" %}
+
+{%- assign flat_pages = "" | split: "" %}
+{% for top in top_pages %}
+  {% assign flat_pages = flat_pages | push: top %}
+  {% assign children = pages_with_title | where: "parent", top.title | sort: "nav_order" %}
+  {% for child in children %}
+    {% assign flat_pages = flat_pages | push: child %}
+  {% endfor %}
+{% endfor %}
+
+{%- assign current_index = nil %}
+{% for p in flat_pages %}
+  {% if p.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{%- assign prev_page = nil %}
+{%- assign next_page = nil %}
+
+{%- comment -%}
+  ページ指定があればそれを優先。なければ通常の並び順から前後を自動決定。
+{%- endcomment -%}
+{% if page.pagination_prev_page %}
+  {% assign prev_page = site.pages | where: "url", page.pagination_prev_page | first %}
+{% elsif current_index and page.pagination_prev_enabled != false %}
+  {% assign prev_index = current_index | minus: 1 %}
+  {% assign prev_candidate = flat_pages[prev_index] %}
+  {% if prev_candidate %}
+    {% assign prev_page = prev_candidate %}
+  {% endif %}
+{% endif %}
+
+{% if page.pagination_next_page %}
+  {% assign next_page = site.pages | where: "url", page.pagination_next_page | first %}
+{% elsif current_index and page.pagination_next_enabled != false %}
+  {% assign next_index = current_index | plus: 1 %}
+  {% assign next_candidate = flat_pages[next_index] %}
+  {% if next_candidate %}
+    {% assign next_page = next_candidate %}
+  {% endif %}
+{% endif %}
+
+<style>
+  .pagination-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+  }
+
+  .pagination-link {
+    flex: 1;
+  }
+
+  .pagination-link a {
+    text-decoration: none;
+  }
+
+  .pagination-link.next {
+    text-align: right;
+  }
+</style>
+
+
+<div class="pagination-links">
+  <div class="pagination-link prev">
+    {% if prev_page %}
+      <a href="{{ prev_page.url }}">← {{ prev_page.title }}</a>
+    {% endif %}
+  </div>
+  <div class="pagination-link next">
+    {% if next_page %}
+      <a href="{{ next_page.url }}">{{ next_page.title }} →</a>
+    {% endif %}
+  </div>
+</div>
