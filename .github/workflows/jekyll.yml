@@ -28,8 +28,12 @@ jobs:
       
       - name: Install Dependencies
         run: |
+          export GEM_HOME=$HOME/.gem
+          export PATH=$GEM_HOME/bin:$PATH
           gem install bundler
-          bundle install
+          bundle install --path vendor/bundle
+        env:
+          GITHUB_PAGES: true
       
       - name: Build
         uses: actions/jekyll-build-pages@v1
